@@ -1,0 +1,23 @@
+h1{
+    text-align: center;
+    color: #1a2537;
+    font-size: 40px;
+}
+form{
+
+    background-color: #f4f4f4;
+
+    padding: 3px;
+    border: 1px solid #E1E1E1;
+}
+body {
+    font:15px Arial, Helvetica, sans-serif;
+    padding: 0;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+.contenedor{
+	width: 80%;
+	margin: auto;
+	overflow: hidden;
+}

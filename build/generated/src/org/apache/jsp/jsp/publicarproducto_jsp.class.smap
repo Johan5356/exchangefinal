@@ -1,0 +1,20 @@
+SMAP
+publicarproducto_jsp.java
+JSP
+*S JSP
+*F
++ 0 publicarproducto.jsp
+jsp/publicarproducto.jsp
+*L
+5,32:48
+37,14:81
+50:95
+51,2:96,3
+53,2:102
+54,5:104
+58,21:109
+79:130,3
+80:133,6
+81:139,3
+82,42:142
+*E
