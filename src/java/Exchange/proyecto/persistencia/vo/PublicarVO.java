@@ -20,6 +20,8 @@ public class PublicarVO {
     private String tiempouso;
     private usuariovo usuario;
     private CategoriasVo categoriasVo;
+     private String categoriasV5o;
+
 
     public CategoriasVo getCategoriasVo() {
         return categoriasVo;
