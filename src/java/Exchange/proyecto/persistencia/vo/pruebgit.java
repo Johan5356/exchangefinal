@@ -10,5 +10,7 @@ package Exchange.proyecto.persistencia.vo;
  * @author Sena
  */
 public class pruebgit {
-    
+    public void johan(String perra){
+        
+    }
 }
