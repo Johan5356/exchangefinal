@@ -4,12 +4,15 @@
  * and open the template in the editor.
  */
 package Exchange.proyecto.persistencia.vo;
+
 import java.io.InputStream;
+
 /**
  *
  * @author johan
  */
 public class PublicarVO {
+
     private int id_publicar;
     private String nombre;
     private String cantidad;
@@ -20,8 +23,77 @@ public class PublicarVO {
     private String tiempouso;
     private usuariovo usuario;
     private CategoriasVo categoriasVo;
-     private String categoriasV5o;
+    private int id_usuario;
+    private int id_categoria;
+    private int id_tiempopublicacion;
+    private InputStream imagen_1;
+    private String imagen1;
+    private String imagen2;
+    private String imagen3;
+    private String imagen4;
+    private String imagen5;
 
+    public PublicarVO(int id_publicar, String nombre, String cantidad, String descripcion, String precioestimado, String marca, String certificado, String tiempouso, usuariovo usuario, CategoriasVo categoriasVo, int id_usuario, int id_categoria, int id_tiempopublicacion, InputStream imagen_1, String imagen1, String imagen2, String imagen3, String imagen4, String imagen5) {
+        this.id_publicar = id_publicar;
+        this.nombre = nombre;
+        this.cantidad = cantidad;
+        this.descripcion = descripcion;
+        this.precioestimado = precioestimado;
+        this.marca = marca;
+        this.certificado = certificado;
+        this.tiempouso = tiempouso;
+        this.usuario = usuario;
+        this.categoriasVo = categoriasVo;
+        this.id_usuario = id_usuario;
+        this.id_categoria = id_categoria;
+        this.id_tiempopublicacion = id_tiempopublicacion;
+        this.imagen_1 = imagen_1;
+        this.imagen1 = imagen1;
+        this.imagen2 = imagen2;
+        this.imagen3 = imagen3;
+        this.imagen4 = imagen4;
+        this.imagen5 = imagen5;
+    }
+
+    public String getImagen1() {
+        return imagen1;
+    }
+
+    public void setImagen1(String imagen1) {
+        this.imagen1 = imagen1;
+    }
+
+    public String getImagen2() {
+        return imagen2;
+    }
+
+    public void setImagen2(String imagen2) {
+        this.imagen2 = imagen2;
+    }
+
+    public String getImagen3() {
+        return imagen3;
+    }
+
+    public void setImagen3(String imagen3) {
+        this.imagen3 = imagen3;
+    }
+
+    public String getImagen4() {
+        return imagen4;
+    }
+
+    public void setImagen4(String imagen4) {
+        this.imagen4 = imagen4;
+    }
+
+    public String getImagen5() {
+        return imagen5;
+    }
+
+    public void setImagen5(String imagen5) {
+        this.imagen5 = imagen5;
+    }
 
     public CategoriasVo getCategoriasVo() {
         return categoriasVo;
@@ -30,7 +102,6 @@ public class PublicarVO {
     public void setCategoriasVo(CategoriasVo categoriasVo) {
         this.categoriasVo = categoriasVo;
     }
-    
 
     public usuariovo getUsuario() {
         return usuario;
@@ -47,36 +118,10 @@ public class PublicarVO {
     public void setImagen_1(InputStream imagen_1) {
         this.imagen_1 = imagen_1;
     }
-    private int id_usuario;
-    private int id_categoria;
-    private int id_tiempopublicacion;
-   private InputStream imagen_1;
 
     public PublicarVO() {
     }
-    
 
-    public PublicarVO(int id_publicar, String nombre, String cantidad, String descripcion, String precioestimado, String marca, String certificado, String tiempouso, int id_usuario, int id_categoria, int id_tiempopublicacion, String imagen_1) {
-        this.id_publicar = id_publicar;
-        this.nombre = nombre;
-        this.cantidad = cantidad;
-        this.descripcion = descripcion;
-        this.precioestimado = precioestimado;
-        this.marca = marca;
-        this.certificado = certificado;
-        this.tiempouso = tiempouso;
-        this.id_usuario = id_usuario;
-        this.id_categoria = id_categoria;
-        this.id_tiempopublicacion = id_tiempopublicacion;
-       
-    }
-
-    public PublicarVO(String computador, String string, String computador_en_buen_estado, String string0, String lenovo, String no, String _meses, int i, int i0, int i1, String anull) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-  
-   
     public int getId_publicar() {
         return id_publicar;
     }
@@ -164,8 +209,5 @@ public class PublicarVO {
     public void setId_tiempopublicacion(int id_tiempopublicacion) {
         this.id_tiempopublicacion = id_tiempopublicacion;
     }
-    
-    
-    
-    
+
 }

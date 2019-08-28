@@ -16,11 +16,8 @@ import java.sql.SQLException;
 public class Conexion {
     private  static String Username="root";
     private static String Password="";
-    private static  String Host="localhost";
-    private static String Post="3306";
-    private static String Database="exchange";
     private  static String driver="com.mysql.jdbc.Driver";
-   private static String url="jdbc:mysql://localhost:3306/exchange";
+   private static String url="jdbc:mysql://localhost:3307/exchange";
    private static Connection conn;
    
    public Conexion(){

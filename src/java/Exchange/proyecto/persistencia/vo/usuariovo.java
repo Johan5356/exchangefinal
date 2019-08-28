@@ -5,6 +5,8 @@
  */
 package Exchange.proyecto.persistencia.vo;
 
+import java.io.InputStream;
+
 /**
  *
  * @author jonathan
@@ -18,6 +20,7 @@ public class usuariovo {
     private String genero;
     private int ciudad_id;
     private CiudadVO ciudadVO;
+    private String perfil;
 
     public CiudadVO getCiudadVO() {
         return ciudadVO;
@@ -25,6 +28,14 @@ public class usuariovo {
 
     public void setCiudadVO(CiudadVO ciudadVO) {
         this.ciudadVO = ciudadVO;
+    }
+
+    public String getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
     }
     
 
@@ -40,6 +51,7 @@ public class usuariovo {
         this.Telefono = Telefono;
         this.genero = genero;
         this.ciudad_id = ciudad_id;
+     
     }
 
     public int getId() {
@@ -97,6 +109,8 @@ public class usuariovo {
     public void setCiudad_id(int ciudad_id) {
         this.ciudad_id = ciudad_id;
     }
+
+    
     
     
     

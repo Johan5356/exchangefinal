@@ -15,102 +15,90 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" >
+        <link href="css/estilos.css" rel="stylesheet" type="text/css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="../css/estilo.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="https://kit.fontawesome.com/297ca4f04f.js"></script>
         <title>Perfil</title>
-        <style>
-            form{
+        <jsp:include page="../Encabezado.jsp"></jsp:include>   
+        </head>
+        <body>  
+        <%
+            usuariovo vo = (usuariovo) session.getAttribute("usuario");
+            ProductoDAO pdao = new ProductoDAO();
+            CategoriaDao cd = new CategoriaDao();
+            List<PublicarVO> producto = pdao.listar(vo.getId());
+            List<CategoriasVo> lista = cd.listar();
 
-                background-color: #f4f4f4;
-
-                padding: 3px;
-                border: 1px solid #E1E1E1;
-            }
-            body {
-                font:15px Arial, Helvetica, sans-serif;
-                padding: 0;
-                margin: 0;
-                background-color: #f4f4f4;
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-            <%
-                usuariovo vo = (usuariovo) session.getAttribute("usuario");
-                ProductoDAO pdao = new ProductoDAO();
-                CategoriaDao cd = new CategoriaDao();
-                List<PublicarVO> producto = pdao.listar(vo.getId());
-                List<CategoriasVo> lista = cd.listar();
-            %>               
-            <jsp:include page="../Encabezado.jsp"></jsp:include>
-        </header>
-        
-        <div class="container">
-            <div class="row" style="border: 1px solid #E1E1E1;">
-                <div class="col-md-4">
-                    <img src="" width="250" height="250">                    
-                </div>
-                <div class="col-md-8">
-                    <br>
-                    <div class="col-md-5">
-                        <h4>Nombre : ${usuario.getNombres()}</h4>
-                        <br>
-                        <br>
-                        <h4>Telefono : ${usuario.getTelefono()} </h4>
-                        <br>
-                        <br>
-                        <a href="editar.jsp"><input type="submit" name="accion" value="Editar Perfil" class="btn btn-primary form-control"></a>
-                    </div>
-                    <div class="col-md-7">
-                        <h4>Correo : ${usuario.getCorreo()}</h4>
-                        <br>
-                        <br>     
-                        <h4>Ciudad : ${usuario.getCiudadVO().getDescripcion()}</h4>
-                        <br>
-                        <br>
-                        <a href="Editarclave.jsp"><input type="submit" name="accion" value="Cambiar Contraseña" class="btn btn-primary form-control"></a>
-                    </div>
-                </div>
-            </div>
+        %>               
+        <div class="container mt-9">
+            <h3>Perfil</h3>
             <br>
-            <br>
-            ${errorp}
-            <c:forEach var="pd" items="<%=producto%>">
-                <div class="container">
-                    <center>
-                        <div class="row" style="border: 1px solid #E1E1E1;" >
-
-                            <div class="col-md-3" >
-                                <img src="../consultarimagen?id=${pd.getId_publicar()}" width="170" height="170">
+            <div class="row ">
+                <div class="col-sm-4 border border-dark">
+                    <div class="card"></div>
+                    <div class="card-header">
+                        <label>Nombre : ${usuario.getNombres()}</label>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img src="img/prueba.png" class="rounded-circle" width="200" height="200"></div><br>
+                        <label>Telefono : ${usuario.getTelefono()}</label>
+                        <br>
+                        <label>Correo : ${usuario.getCorreo()}</label>
+                        <br>
+                        <label>Ciudad : ${usuario.getCiudadVO().getDescripcion()}</label>
+                        <br>
+                    </div>            
+                    <div class=" card-footer"></div>
+                    <a href="#"class="btn btn-info btn-block">Editar perfil</a>
+                    <a href="#"class="btn btn-success btn-block">Cambiar contraseña</a>
+                </div>
+                
+                    <div class="col-sm-8">
+                        <c:forEach var="pd" items="<%=producto%>">
+                            <div class="container">
+                                <center>                
+                                    <div class="row border border-primary"  >
+                                        <div class="col-md-3" >
+                                            <br>
+                                            <img  class="rounded " src="../consultarimagen?id=${pd.getId_publicar()}" width="200" height="200"> 
+                                        </div>
+                                        <div class="col-md-6" >
+                                            <br>
+                                            <label>Nombre: ${pd.getNombre()}</label>
+                                            <br>
+                                            <label>Descripcion: ${pd.getDescripcion()}</label>
+                                            <br>
+                                            <label>Precio:$.${pd.getPrecioestimado()}</label>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <br>                      
+                                            <a href="../listarproducto?idproducto=${pd.getId_publicar()}"><input type="submit" class="form-control btn btn-primary" value="Editar " ></a>
+                                            <br>
+                                            <br>
+                                            <a href="../Detallesproducto?idproducto=${pd.getId_publicar()}"><input type="submit" class="form-control btn btn-success" value="Detalles " ></a>
+                                            <br>
+                                            <br>
+                                            <a href="../eliminar?ideli=${pd.getId_publicar()}"><input type="submit" class="form-control btn btn-danger" value="Eliminar "</a> 
+                                            <br>
+                                            <br>
+                                        </div>
+                                                       
+                                    </div>                                                       
+                                    
+                                </center>
                             </div>
-                            <div class="col-md-4" >
-                                <h3>${pd.getNombre()}</h3>
-                                <br>
-                                <p style="border: 1px solid #E1E1E1;">${pd.getDescripcion()}</p>
-                            </div>
-                            <div class="col-md-3">
-                                <br>                      
-                                <a href="../listarproducto?idproducto=${pd.getId_publicar()}"><input type="submit" class="form-control btn btn-primary" value="Editar " ></a>
-                                <br>
-                                <br>
-                                <a href="../Detallesproducto?idproducto=${pd.getId_publicar()}"><input type="submit" class="form-control btn btn-primary" value="Detalles " ></a>
-                                <br>
-                                <br>
-                                <a href="../eliminar?ideli=${pd.getId_publicar()}"><input type="submit" class="form-control btn btn-primary" value="Eliminar "</a> 
-                                <br>
-                                <br>
-                            </div>                   
-
-
                         </div>
-                    </center>
-                </div>
-            </div>
-        </c:forEach>
-        <script src="../js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="../js/jquery.js" type="text/javascript"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> 
-    </body>
+                    </c:forEach>
+            </div>          
+        </div>
+    </div>
+<script src="../js/jquery.js" type="text/javascript"></script
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
 </html>

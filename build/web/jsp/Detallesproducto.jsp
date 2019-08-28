@@ -90,13 +90,15 @@
                         <div class="row">
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
-                                <h4 align="center">Desea ingresar ala subasta</h4>
+                                <h4 align="center">Desea ingresar a la subasta</h4>
                                 <div class="col-md-6">
-                                    <input type="submit" value="Si" class="btn btn-primary form-control" name="">
+                                    
+                                    <a href="subasta.jsp?idusuario=${usuario.getId()}" <input  type="submit" value="Si" class="btn btn-primary form-control" name="">Si</a> 
                                 </div>
                                 <div class="col-md-6">
                                     <input type="submit"  value="No" class="btn btn-primary form-control" name="">
                                 </div>
+                                
                             </div>
                             <div class="col-md-4"></div>
                         </div>

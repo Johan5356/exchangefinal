@@ -6,6 +6,7 @@
 package Exchange.proyecto.negocio.servlet;
 
 import Exchange.proyecto.persistencia.dao.ProductoDAO;
+import Exchange.proyecto.persistencia.dao.usuarioDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;

@@ -7,9 +7,12 @@ package Exchange.proyecto.negocio.servlet;
 
 import Exchange.proyecto.persistencia.dao.ProductoDAO;
 import Exchange.proyecto.persistencia.vo.PublicarVO;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -17,12 +20,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
  * @author 57313
  */
-@MultipartConfig
+
 public class Controlador_Productos extends HttpServlet {
 
     /**
@@ -45,7 +52,7 @@ public class Controlador_Productos extends HttpServlet {
             case "/detalles":
                 int idproducto = Integer.parseInt(request.getParameter("idproducto"));
                 pvo.setId_publicar(idproducto);
-                if (pdao.consultarproducto2(pvo)) {
+                if (pdao.detallesproducto(pvo)) {
                     request.getSession().setAttribute("producto", pvo);
                     response.sendRedirect("jsp/Detallesproducto.jsp");
 
@@ -59,39 +66,14 @@ public class Controlador_Productos extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter("ideli"));
                 pvo.setId_publicar(id);
                 if (pdao.eliminar_producto(pvo)) {
-                    request.getSession().setAttribute("errorp","Se Elimino Correctamente" );
+                    
                     response.sendRedirect("jsp/Perfil.jsp");
                 } else {
                     response.getWriter().println("NO se pudo eliminar ");
                 }
                 break;
             case "/publicar":
-                String nombre = request.getParameter("nombre");
-                String cantidad = request.getParameter("size");
-                String marca = request.getParameter("marca");
-                String tiempo = request.getParameter("tiempo_uso");
-                String descripcion = request.getParameter("descripcion");
-                String precio = request.getParameter("precio");
-                int categoria = Integer.parseInt(request.getParameter("categoria"));
-                int id_producto = Integer.parseInt(request.getParameter("id"));
-                Part part = request.getPart("fileimagen");
-                InputStream inputStream = part.getInputStream();
-      
-                pvo.setNombre(nombre);
-                pvo.setCantidad(cantidad);
-                pvo.setTiempouso(tiempo);
-                pvo.setPrecioestimado(precio);
-                pvo.setMarca(marca);
-                pvo.setDescripcion(descripcion);
-                pvo.setId_categoria(categoria);
-                pvo.setId_usuario(id_producto);
-                pvo.setImagen_1(inputStream);
-
-                if (pdao.crear_producto(pvo)) {
-                    response.sendRedirect("jsp/Perfil.jsp");
-                } else {
-                    response.getWriter().println("ERROR al crear producto");
-                }
+                nuevoproducto(response,request);
                 break;
             case "/perfil":
                 int idusuario = Integer.parseInt(request.getParameter("idusuario"));
@@ -147,5 +129,47 @@ public class Controlador_Productos extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void nuevoproducto(HttpServletResponse response, HttpServletRequest request) throws IOException {
+       int id = Integer.parseInt(request.getParameter("id"));
+        FileItemFactory file_factory = new DiskFileItemFactory();
+        ServletFileUpload sfu = new ServletFileUpload(file_factory);
+
+        ArrayList<String> campos = new ArrayList<>();
+        ArrayList<String> imgs = new ArrayList<>();
+
+        try {
+            List items = sfu.parseRequest(request);
+            for (int i = 0; i < items.size(); i++) {
+                FileItem item = (FileItem) items.get(i);
+                if (!item.isFormField()) {
+                    File archivo = new File("C:\\Users\\Sena.DESKTOP-8CEV86G\\Documents\\NetBeansProjects\\exchangev3\\web\\img\\productos\\" + item.getName());
+                    item.write(archivo);
+                    imgs.add("img/productos/" + item.getName());
+                } else {
+                    campos.add(item.getString());
+                }
+            }
+        } catch (Exception ex) {
+
+        }
+        ProductoDAO pdao = new ProductoDAO();
+        PublicarVO pvo = new PublicarVO();
+        pvo.setNombre(campos.get(0));
+        pvo.setDescripcion(campos.get(1));
+        pvo.setPrecioestimado(campos.get(2));
+        pvo.setCantidad(campos.get(3));
+        pvo.setMarca(campos.get(4));
+        pvo.setImagen1(imgs.get(0));
+        pvo.setImagen2(imgs.get(1));
+        pvo.setImagen3(imgs.get(2));    
+        pvo.setId_categoria(Integer.parseInt(campos.get(5)));
+        pvo.setId_usuario(id);
+        if (pdao.Publicar_producto(pvo)) {
+            response.sendRedirect("jsp/inicio.jsp");
+        } else {
+            response.getWriter().println("ERROR al crear producto");
+        }
+    }
 
 }

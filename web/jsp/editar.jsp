@@ -67,6 +67,14 @@
                                     <input type="text" class="form-control" value="${usuario.getCorreo()}" name="txtcorreo"  placeholder="">
                                 </div>
                             </div>
+                                <br>
+                                <br>
+                                <div class="form-group" >
+                                    <label class="control-label col-sm-3">Foto:</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="file" name="filefoto" id="archivos" multiple> 
+                                </div>
+                                  </div>  
                         </div>
 
                         <div class="col-sm-6">

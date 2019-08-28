@@ -80,9 +80,7 @@
             <br>
             <c:forEach var="pd" items="<%=producto%>">
                 <div class="container">
-                   
                         <div class="row" style="border: 1px solid #E1E1E1;" >
-
                             <div class="col-md-3" >
                                 <img src="../consultarimagen?id=${pd.getId_publicar()}" width="170" height="170">
                             </div>
@@ -93,7 +91,7 @@
                             </div>
                             <div class="col-md-3">
                                 <br>                      
-                                <a><input type="submit" class="form-control btn btn-primary" value="Agendar cita " ></a>
+                                <a><input type="submit" class="form-control btn btn-primary" value="Ingresar a la subasta" ></a>
                                 <br>
                                 <br>                               
                             </div>                   

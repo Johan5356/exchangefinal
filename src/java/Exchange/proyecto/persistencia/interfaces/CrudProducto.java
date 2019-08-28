@@ -15,5 +15,6 @@ public interface CrudProducto {
     public boolean crear_producto(PublicarVO p);
     public boolean editar_producto(PublicarVO p);
     public boolean eliminar_producto(PublicarVO p);
+    public boolean Publicar_producto(PublicarVO p);
 
 }

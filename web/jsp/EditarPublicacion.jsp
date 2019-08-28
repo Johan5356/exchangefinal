@@ -95,7 +95,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <img src="../consultarimagen?id=<%=pvo.getId_publicar()%>" id="foto" height="250" width="250">
+                        <img src="../consultarimagen?id=<%=pvo.getImagen_1()%>" id="foto" height="250" width="250">
 
 
                     </div>

@@ -14,6 +14,7 @@ import Exchange.proyecto.persistencia.vo.usuariovo;
 public interface Crud {
     public boolean consultar(usuariovo usuario);
     public boolean agregar(usuariovo usuario);
-    public boolean verificar(usuariovo usuario);
-    public boolean actualizar(usuariovo usuario);
+    public boolean verificar(int id);
+    public boolean actualizar(usuariovo usuario,int id);
+    public boolean subirfoto(usuariovo usuario);
 }

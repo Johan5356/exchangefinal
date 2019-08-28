@@ -10,94 +10,67 @@
     <head>
         <title>Exchange</title>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" >
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="../css/estilos.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="https://kit.fontawesome.com/297ca4f04f.js"></script>
+        <jsp:include page="../Encabezado.jsp"></jsp:include>
+        </head>
+        <body background="../img/claro2.jpg" >
+        <%
+            usuariovo vo = (usuariovo) session.getAttribute("usuario");
+            CategoriaDao cd = new CategoriaDao();
+            ProductoDAO pdao = new ProductoDAO();
+            List<CategoriasVo> lista = cd.listar();
+            List<PublicarVO> producto = pdao.verproducto();
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <meta name = "viewport" content="width=device-width">
-        <meta name = "description" content="Exchange mas que una familia">
-        <meta name = "keywords" content="diseño web, desarrollo web, seo, posicionamiento web">
-        <meta name = "author" content="Render-2Web">
-        <link rel="stylesheet" type="text/css" href="../css/estilo.css">
-        <style>
-            form{
-
-                background-color: #f4f4f4;
-
-                padding: 3px;
-                border: 1px solid #E1E1E1;
-            }
-            body {
-                font:15px Arial, Helvetica, sans-serif;
-                padding: 0;
-                margin: 0;
-                background-color: #f4f4f4;
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-             <%
-                usuariovo vo = (usuariovo) session.getAttribute("usuario");
-                CategoriaDao cd = new CategoriaDao();
-                ProductoDAO pdao = new ProductoDAO();
-                List<CategoriasVo> lista = cd.listar();
-                List<PublicarVO> producto = pdao.verproducto();
-
-            %>
-            <jsp:include page="../Encabezado.jsp"></jsp:include>
-        </header>
+        %>
         <br>
     <center>
         <img src="../img/logolargo.png">
     </center>
-
     <section id="cabecera">
         <div class="contenedor">
-            <h1>Profesionales Expertos en Intercambios Online</h1>
-            <p>¿Deseas intercambiar algun objeto que no necesitas por otro que realmente necesitas</p>
+           <h1>Profesionales Expertos en Intercambios Online</h1>
+            <p>Intercambiar alg�n objeto que no necesitas por otro que realmente necesitas</p>
         </div>
     </section>
-
-
     <section id="boletin">
-        <div class="contenedor">
-            <h1>Encuentra rapido tus objetos...</h1>
-            <form>
-                <input type="text" name="texto" placeholder="Buscar objeto...">
-                <button type="submit" class="boton1">Buscar</button>
-            </form>
-        </div>
- <table border="0" align="center" width="1000">
-            <%
-                int salto = 0;
-            %>
-            <c:forEach var="pd" items="<%=producto%>">
-               <th> <a href="../detalles?idproducto=${pd.getId_publicar()}"><img src="../consultarimagen?id=${pd.getId_publicar()}" height="200" width="200"><p>
-                    <p>
-                        Nombre : ${pd.getNombre()}<br>
-                        Valor : ${pd.getPrecioestimado()}<br>
-                        
-                    </p>
-                    </a>
-                   </th>
-                <%
-                    salto++;
-                    if (salto == 4) {
-                %>
-                <tr>
-                    <%
-                            salto = 0;
-                        }
-                    %>
-                </c:forEach>
-        </table>
+        <center>  <h1 >Productos recientes</h1></center>
         <footer>
-            <center>
-                <p>Exchange plataforma web. Copyrigth &copy; 2019</p>
-            </center>
-
-        </footer>
-        <script src="../js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="../js/jquery.js" type="text/javascript"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    </body>
-</html>
+            <div class="container mt-4">
+                <div  class="row">
+                    <c:forEach  var="pd" items="<%=producto%>">
+                        <div  class="col-sm-4">
+                            <div id="idpro" class="card">
+                                <div class="card-header">
+                                    <label>${pd.getNombre()}<label>
+                                            </div>
+                                            <div class="card-body "> 
+                                                <i>$.${pd.getPrecioestimado()}</i>
+                                                <img src="../consultarimagen?id=${pd.getId_publicar()}" class="col" alt="..." width="20" height="200">
+                                            </div>
+                                            <div class="card-footer text-center"> 
+                                                <label>${pd.getDescripcion()}</label>
+                                                <div >
+                                                    <a href="" class="btn btn-outline-info">Ingresar a subasta</a>
+                                                    <a href="../detallesid=${pd.getId_publicar()}" class="btn btn-outline-danger">Ver mas info</a>
+                                                </div>
+                                            </div>
+                                            </div>    
+                                            </div>
+                                        </c:forEach>
+                                        </div>
+                                        </div>
+                                        </footer>
+                                        <center>
+                                            <p>Exchange plataforma web. Copyrigth &copy; 2019</p>
+                                        </center>
+                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+                                        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                                        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+                                        </body>
+                                        </html>

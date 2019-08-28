@@ -3,6 +3,9 @@ package org.apache.jsp;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import Exchange.proyecto.persistencia.conexion.Conexion;
 import Exchange.proyecto.persistencia.vo.PublicarVO;
 import Exchange.proyecto.persistencia.dao.ProductoDAO;
 import Exchange.proyecto.persistencia.vo.CategoriasVo;
@@ -63,6 +66,9 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\r\n");
       out.write("\r\n");
       out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
       out.write("<!DOCTYPE html>\r\n");
       out.write("<html>\r\n");
       out.write("    <head>\r\n");
@@ -79,6 +85,11 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        <header>\r\n");
       out.write("            ");
 
+            Conexion cn = new Conexion();
+            Statement smt;
+            ResultSet rs;
+            smt=cn.getConnection().createStatement();
+            rs=smt.executeQuery("SELECT * FROM producto");
                 ProductoDAO pdao = new ProductoDAO();
                 CategoriaDao cd = new CategoriaDao();
 
@@ -96,6 +107,7 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            <div class=\"container-fluid\">\r\n");
       out.write("                <div class=\"navbar-header\">\r\n");
       out.write("                    <a class=\"navbar-brand\" href=\"#\">Exchange</a>\r\n");
+      out.write("                    \r\n");
       out.write("                </div>\r\n");
       out.write("                <ul class=\"nav navbar-nav\">\r\n");
       out.write("                    <li class=\"active\"><a href=\"inicio.jsp\">Inicio</a></li>\r\n");
@@ -146,6 +158,22 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\r\n");
       out.write("                        </ul>\r\n");
       out.write("                    </li>\r\n");
+      out.write("                  <form align=\"left\" >\r\n");
+      out.write("                <input type=\"text\" name=\"textobucar\" placeholder=\"Buscar objeto...\">\r\n");
+      out.write("                <button type=\"submit\" name=\"Buscar \"class=\"boton1\">Buscar</button>\r\n");
+      out.write("            </form>\r\n");
+      out.write("                      ");
+
+            String Nombrebusqueda=request.getParameter("textobuscar");
+            if(Nombrebusqueda!=null){
+                smt=cn.getConnection().createStatement();
+                rs=smt.executeQuery("SELECT *FROM producto where nombre LIKE "+"'%"+Nombrebusqueda+"%'" );
+            }else{
+            System.err.println("Error");
+            }
+            
+      out.write("\r\n");
+      out.write("\r\n");
       out.write("                </ul>\r\n");
       out.write("                <ul class=\"nav navbar-nav navbar-right\">\r\n");
       out.write("                    <li><a href=\"jsp/regristar.jsp\"><span class=\"glyphicon glyphicon-user\"></span> Regristarse</a></li>\r\n");
@@ -160,19 +188,13 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("    <section id=\"cabecera\">\r\n");
       out.write("        <div class=\"contenedor\">\r\n");
       out.write("            <h1>Profesionales Expertos en Intercambios Online</h1>\r\n");
-      out.write("            <p>Â¿Deseas intercambiar algun objeto que no necesitas por otro que realmente necesitas</p>\r\n");
+      out.write("            <p>Intercambiar algún objeto que no necesitas por otro que realmente necesitas</p>\r\n");
       out.write("        </div>\r\n");
       out.write("    </section>\r\n");
       out.write("\r\n");
       out.write("\r\n");
       out.write("    <section id=\"boletin\">\r\n");
-      out.write("        <div class=\"contenedor\">\r\n");
-      out.write("            <h1>Encuentra rapido tus objetos...</h1>\r\n");
-      out.write("            <form>\r\n");
-      out.write("                <input type=\"text\" name=\"texto\" placeholder=\"Buscar objeto...\">\r\n");
-      out.write("                <button type=\"submit\" class=\"boton1\">Buscar</button>\r\n");
-      out.write("            </form>\r\n");
-      out.write("        </div>\r\n");
+      out.write("       \r\n");
       out.write("        <table border=\"0\" align=\"center\" width=\"1000\">\r\n");
       out.write("            ");
 

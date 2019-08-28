@@ -5,20 +5,33 @@
  */
 package Exchange.proyecto.negocio.servlet;
 
+import Exchange.proyecto.persistencia.dao.ProductoDAO;
 import Exchange.proyecto.persistencia.dao.usuarioDao;
+import Exchange.proyecto.persistencia.vo.PublicarVO;
 import Exchange.proyecto.persistencia.vo.usuariovo;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
  * @author 57313
  */
+@MultipartConfig
 public class Controlador_usuario extends HttpServlet {
 
     /**
@@ -30,52 +43,25 @@ public class Controlador_usuario extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    usuarioDao dao = new usuarioDao();
+    usuariovo vo = new usuariovo();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        usuarioDao dao = new usuarioDao();
-        usuariovo vo = new usuariovo();
+
         String url = request.getServletPath();
         switch (url) {
             case "/ingresar":
-                String correo = request.getParameter("correo");
-                String password = request.getParameter("password");
-                vo.setCorreo(correo);
-                vo.setPassword(password);
-                if (dao.consultar(vo)) {
-                    
-                    request.getSession().setAttribute("usuario", vo);
-                    response.sendRedirect("jsp/inicio.jsp");
-                    // request.getRequestDispatcher("jsp/inicio.jsp").forward(request, response);
-                } else {
-                    out.println("<script>alert('Usuario no encontrado');</script>");
-                    request.getSession().setAttribute("error", "Usuario no Existe");
-                    response.sendRedirect("html/loginvista.html");
-                }
+
+                ingresar(response, request);
+
                 break;
 
             case "/regristar":
-                String accion = request.getParameter("accion");
-                String nombre = request.getParameter("txtnombre");
-                String correo2 = request.getParameter("txtcorreo");
-                String password2 = request.getParameter("txtpassword");
-                String telefono = request.getParameter("txttelefono");
-                String genero = request.getParameter("sexo");
-                int ciudad = Integer.parseInt(request.getParameter("txtciudad"));
-                vo.setNombres(nombre);
-                vo.setCorreo(correo2);
-                vo.setPassword(password2);
-                vo.setTelefono(telefono);
-                vo.setGenero(genero);
-                vo.setCiudad_id(ciudad);
-                if (dao.agregar(vo)) {
-                    request.getSession().setAttribute("usuario", vo);
-                    response.sendRedirect("jsp/inicio.jsp");
-                } else {
-                    request.getSession().setAttribute("error", "No se pudo Regristrar el usuario");
-                    response.sendRedirect("../exchange/jsp/regristar.jsp");
-                }
+                regristarse(response, request);
+
                 break;
             case "/cerrar":
                 HttpSession session = request.getSession();
@@ -83,42 +69,21 @@ public class Controlador_usuario extends HttpServlet {
                 response.sendRedirect("index.jsp");
                 break;
             case "/editar":
-                String nombre3 = request.getParameter("txtnombre");
-                String correo3 = request.getParameter("txtcorreo");
-                String telefono3 = request.getParameter("txttelefono");
 
-                int ciudad2 = Integer.parseInt(request.getParameter("txtciudad"));
-                int id = Integer.parseInt(request.getParameter("id"));
+                editar(request, response);
 
-                vo.setNombres(nombre3);
-                vo.setCorreo(correo3);
-                vo.setTelefono(telefono3);
-                vo.setCiudad_id(ciudad2);
-                vo.setId(id);
-                if (dao.actualizar(vo)) {
-                    request.getSession().setAttribute("usuario", vo);
-                    response.sendRedirect("jsp/inicio.jsp");
-                } else {
-                    response.sendRedirect("jsp/editar.jsp");
-                }
                 break;
             case "/clave":
-                String clave = request.getParameter("txtpassword");
+                String clave = request.getParameter("");
                 int id_password = Integer.parseInt(request.getParameter("id"));
 
                 vo.setPassword(clave);
                 vo.setId(id_password);
-                if (dao.cambiarcontraseña(vo)) {
-
-                    response.sendRedirect("jsp/inicio.jsp");
-                } else {
-                    response.sendRedirect("jsp/cambio.jsp");
-                }
+                dao.cambiarcontraseña(vo);
 
                 break;
-            case "/perfil":
-                
-                break;
+            case "/fotoperfil":
+               subirfoto(response,request);
         }
 
     }
@@ -161,5 +126,107 @@ public class Controlador_usuario extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void editar(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String nombre3 = request.getParameter("txtnombre");
+        String correo3 = request.getParameter("txtcorreo");
+        String telefono3 = request.getParameter("txttelefono");
+
+        int ciudad2 = Integer.parseInt(request.getParameter("txtciudad"));
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        vo.setNombres(nombre3);
+        vo.setCorreo(correo3);
+        vo.setTelefono(telefono3);
+        vo.setCiudad_id(ciudad2);
+        vo.setId(id);
+        if (dao.actualizar(vo, id)) {
+
+            request.getSession().setAttribute("usuario", vo);
+            response.sendRedirect("jsp/Perfil.jsp");
+
+        } else {
+            response.sendRedirect("jsp/Perfil.jsp");
+        }
+    }
+
+    private void ingresar(HttpServletResponse response, HttpServletRequest request) throws IOException {
+        String correo = request.getParameter("correo");
+        String password = request.getParameter("password");
+        vo.setCorreo(correo);
+        vo.setPassword(password);
+        if (dao.consultar(vo)) {
+
+            request.getSession().setAttribute("usuario", vo);
+            response.sendRedirect("jsp/inicio.jsp");
+            // request.getRequestDispatcher("jsp/inicio.jsp").forward(request, response);
+        } else {
+
+            request.getSession().setAttribute("error", "Usuario no Existe");
+            response.sendRedirect("html/loginvista.html");
+        }
+    }
+
+    private void regristarse(HttpServletResponse response, HttpServletRequest request) throws IOException {
+        String accion = request.getParameter("accion");
+                String nombre = request.getParameter("txtnombre");
+                String correo2 = request.getParameter("txtcorreo");
+                String password2 = request.getParameter("txtpassword");
+                String telefono = request.getParameter("txttelefono");
+                String genero = request.getParameter("sexo");
+                int ciudad = Integer.parseInt(request.getParameter("txtciudad"));
+                vo.setNombres(nombre);
+                vo.setCorreo(correo2);
+                vo.setPassword(password2);
+                vo.setTelefono(telefono);
+                vo.setGenero(genero);
+                vo.setCiudad_id(ciudad);
+                if (dao.agregar(vo)) {
+                    request.getSession().setAttribute("usuario", vo);
+
+                    response.sendRedirect("jsp/inicio.jsp");
+                } else {
+
+                    response.sendRedirect("../exchange/jsp/regristar.jsp");
+                }
+    }
+
+    private void subirfoto(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        FileItemFactory file_factory = new DiskFileItemFactory();
+        ServletFileUpload sfu = new ServletFileUpload(file_factory);
+
+        ArrayList<String> campos = new ArrayList<>();
+        ArrayList<String> imgs = new ArrayList<>();
+
+        try {
+            List items = sfu.parseRequest(request);
+            for (int i = 0; i < items.size(); i++) {
+                FileItem item = (FileItem) items.get(i);
+                if (!item.isFormField()) {
+                    File archivo = new File("C:\\Users\\57313\\Documents\\NetBeansProjects\\exchange\\web\\img\\perfil\\" + item.getName());
+                    item.write(archivo);
+                    imgs.add("img/perfil/" + item.getName());
+                } else {
+                    campos.add(item.getString());
+                }
+            }
+        } catch (Exception ex) {
+
+        }
+       usuarioDao dao=new usuarioDao();
+       usuariovo vo=new usuariovo();
+       vo.setPerfil(imgs.get(0));
+       vo.setId(id);
+        if (dao.subirfoto(vo)) {
+            response.sendRedirect("jsp/Perfil.jsp");
+        }
+        else{
+            response.getWriter().println("ERROR al crear producto");
+        }
+               
+       
+        
+    }
 
 }
