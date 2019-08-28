@@ -15,6 +15,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -28,10 +29,53 @@ import javax.servlet.http.HttpServletResponse;
 public class ProductoDAO implements CrudProducto {
 
     Conexion con = new Conexion();
+    Connection conn;
     PreparedStatement ps;
     ResultSet rs;
     int cont = 0;
-
+    public PublicarVO listarId(int id) {
+        String sql = "SELECT*FROM producto WHERE idproducto=" + id;
+        PublicarVO p = new PublicarVO();
+        try {
+            conn = con.getConnection();
+            ps=conn.prepareStatement(sql);
+            rs=ps.executeQuery();
+            while (rs.next()) {
+                p.setId_publicar(rs.getInt(1));
+                p.setNombre(rs.getString(2));
+                p.setCantidad(rs.getString(4));
+                p.setDescripcion(rs.getString(5));
+                p.setPrecioestimado(rs.getString(6));
+                p.setTiempouso(rs.getString(7));
+                p.setImagen_1(rs.getBinaryStream(8));
+                
+            }
+        } catch (Exception e) {
+        }
+        return p;
+    }
+ public List listar2() {
+        List<PublicarVO> producto = new ArrayList<>();
+        String sql = "SELECT * FROM producto";
+        try {
+            conn = con.getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                PublicarVO p = new PublicarVO();
+                p.setId_publicar(rs.getInt(1));
+                p.setNombre(rs.getString(2));
+                p.setCantidad(rs.getString(3));
+                p.setDescripcion(rs.getString(4));
+                p.setPrecioestimado(rs.getString(5));
+                p.setTiempouso(rs.getString(6));
+                p.setImagen_1(rs.getBinaryStream(7));
+                producto.add(p);
+            }
+        } catch (Exception e) {
+        }
+        return producto;
+    }
     //Con Este Metodo Se publica el usuario
     @Override
     public boolean crear_producto(PublicarVO p) {

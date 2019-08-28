@@ -80,9 +80,7 @@ public class Controlador_Productos extends HttpServlet {
                 pvo.setId_usuario(idusuario);
                 if (pdao.consultarproducto(pvo)) {
                     request.getSession().setAttribute("perfil", pvo);
-
                     response.sendRedirect("jsp/Perfilusuarios.jsp");
-
                 } else {
                     response.sendRedirect("jsp/inicio.jsp");
                 }
@@ -134,16 +132,14 @@ public class Controlador_Productos extends HttpServlet {
        int id = Integer.parseInt(request.getParameter("id"));
         FileItemFactory file_factory = new DiskFileItemFactory();
         ServletFileUpload sfu = new ServletFileUpload(file_factory);
-
         ArrayList<String> campos = new ArrayList<>();
         ArrayList<String> imgs = new ArrayList<>();
-
         try {
             List items = sfu.parseRequest(request);
             for (int i = 0; i < items.size(); i++) {
                 FileItem item = (FileItem) items.get(i);
                 if (!item.isFormField()) {
-                    File archivo = new File("C:\\Users\\Sena.DESKTOP-8CEV86G\\Documents\\NetBeansProjects\\exchangev3\\web\\img\\productos\\" + item.getName());
+                    File archivo = new File("C:\\Users\\johan\\Documents\\NetBeansProjects\\exchange\\web\\img\\producto\\" + item.getName());
                     item.write(archivo);
                     imgs.add("img/productos/" + item.getName());
                 } else {
@@ -151,7 +147,6 @@ public class Controlador_Productos extends HttpServlet {
                 }
             }
         } catch (Exception ex) {
-
         }
         ProductoDAO pdao = new ProductoDAO();
         PublicarVO pvo = new PublicarVO();
@@ -168,7 +163,7 @@ public class Controlador_Productos extends HttpServlet {
         if (pdao.Publicar_producto(pvo)) {
             response.sendRedirect("jsp/inicio.jsp");
         } else {
-            response.getWriter().println("ERROR al crear producto");
+            response.getWriter().println("Eror al crear producto");
         }
     }
 

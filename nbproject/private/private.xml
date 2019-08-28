@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/johan/Documents/NetBeansProjects/exchange/src/java/Exchange/proyecto/persistencia/interfaces/CrudProducto.java</file>
+            <file>file:/C:/Users/johan/Documents/NetBeansProjects/exchange/src/java/Exchange/proyecto/negocio/servlet/Controlador_usuario.java</file>
+            <file>file:/C:/Users/johan/Documents/NetBeansProjects/exchange/src/java/Exchange/proyecto/persistencia/interfaces/Crud.java</file>
+            <file>file:/C:/Users/johan/Documents/NetBeansProjects/exchange/src/java/Exchange/proyecto/persistencia/dao/ProductoDAO.java</file>
+            <file>file:/C:/Users/johan/Documents/NetBeansProjects/exchange/src/java/Exchange/proyecto/negocio/servlet/Controlador_Productos.java</file>
+            <file>file:/C:/Users/johan/Documents/NetBeansProjects/exchange/src/java/Exchange/proyecto/negocio/servlet/publicarproducto.java</file>
+            <file>file:/C:/Users/johan/Documents/NetBeansProjects/exchange/src/java/Exchange/proyecto/persistencia/dao/usuarioDao.java</file>
+        </group>
     </open-files>
 </project-private>

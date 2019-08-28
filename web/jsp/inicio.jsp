@@ -56,7 +56,7 @@
                                             <div class="card-footer text-center"> 
                                                 <label>${pd.getDescripcion()}</label>
                                                 <div >
-                                                    <a href="" class="btn btn-outline-info">Ingresar a subasta</a>
+                                                    <a href="Controlador_subasta?accion=AgregarSubasta&id=${p.getId_publicar()}" class="btn btn-outline-info">Ingresar a subasta</a>
                                                     <a href="../detallesid=${pd.getId_publicar()}" class="btn btn-outline-danger">Ver mas info</a>
                                                 </div>
                                             </div>

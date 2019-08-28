@@ -58,7 +58,7 @@
                     </li>
 
                     <li id="sub" class="nav-item">
-                        <a class="nav-link " href="#" id="btnSub" ><span style="font-size: 19px; color: Dodgerblue;"><i class="fas fa-balance-scale">(<label style="color:darkorange ">${contador}</label>)</i></span>Subasta en curso</a>
+                        <a class="nav-link " href="Controlador_subasta?accion=Subasta" id="btnSub" ><span style="font-size: 19px; color: Dodgerblue;"><i class="fas fa-balance-scale">(<label style="color:darkorange ">${contador}</label>)</i></span>Subasta en curso</a>
                     </li>              
                         <li class=" nav-item dropdown">
                          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Categorias
@@ -83,9 +83,7 @@
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">${usuario.getCorreo()}</a></li>
-                        <li><a class="dropdown-item" href="Perfil.jsp">Perfil</a></li>
-                        <li><a class="dropdown-item" href="editar.jsp">Editar Perfil</a></li>
-                        <li><a class="dropdown-item" href="Editarclave.jsp">Cambio de Contraseña</a></li>
+                        <li><a class="dropdown-item" href="Perfil.jsp">Perfil</a></li>         
                         <li><a class="dropdown-item" href="../cerrar">Salir</a></li>
                     </ul>
                 </li>

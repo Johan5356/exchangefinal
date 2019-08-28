@@ -48,7 +48,7 @@ public class consultarimagen extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         ProductoDAO pdao=new ProductoDAO();
         int id =Integer.parseInt(request.getParameter("id"));
         pdao.verimagen(id, response);

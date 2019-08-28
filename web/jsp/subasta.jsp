@@ -19,18 +19,11 @@
         <link href="../css/estiloprincipal.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="../css/estilo.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <style>
-          body {
-    font:15px Arial, Helvetica, sans-serif;
-    padding: 0;
-    margin: 0;
-    background-color: #f4f4f4;
-}
-        </style>
+        <jsp:include page="../Encabezado.jsp"></jsp:include>
     </head>
     <body>
         
-         <header>
+         
             <%
                 usuariovo usu = (usuariovo) session.getAttribute("usuario");
                 usuariovo vo = (usuariovo) session.getAttribute("usuario");
@@ -40,34 +33,60 @@
                 List<PublicarVO> producto = pdao.listar(id);
                 List<CategoriasVo> lista = cd.listar();
             %>
-          <jsp:include page="../Encabezado.jsp"></jsp:include>
-        </header>
-        <h1>SUBIR SUBASTA</h1>
-         <c:forEach var="pd" items="<%=producto%>">
-                <div class="container">
-                    <center>
-                        <div class="row" style="border: 1px solid #E1E1E1;" >
-                            <div class="col-md-3" >
-                                <img src="../consultarimagen?id=${pd.getId_publicar()}" width="170" height="170">
-                            </div>
-                            <div class="col-md-4" >
-                                <h3>${pd.getNombre()}</h3>
-                                <br>
-                                <p style="border: 1px solid #E1E1E1;">${pd.getDescripcion()}</p>
-                            </div>
-                            <div class="col-md-3">
-                                <br>                      
-                                <br>                      
-                                <br>                      
-                                <a href="..//ingresar?idproducto=${pd.getId_publicar()}"><input type="submit" class="form-control btn btn-primary" value="Enviar subasta " ></a>
-                                <br>
-                                <br>      
-                            </div>                   
-                        </div>
-                    </center>
+       
+       <div class="container mt-4">
+            <h3>Subasta</h3>
+            <br>
+            <div class="row">
+                <div class="col-sm-8">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Precio</th>
+                                <th>Acion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="sub" items="${subasta}">
+                                <tr>
+                                    <td>${sub.getIdsolicitud_intercambio()}</td>
+                                    <td>${sub.getNombres()}</td>
+                                    <td>${sub.getDescripciones()}
+                                        <img src="Controlarimagenid=${sub.getProducto_idproducto()}"width="100" height="100" >                               
+                                    </td>
+                                    <td>${sub.getPrecios()}</td>  
+                                    <td>${sub.getUsuario_idusuario()}</td>  
+                                    <td>${sub.getProducto_idproducto()}</td> 
+                                    <td>
+                                        <input type="hidden"  id="idpp" values="${sub.getProducto_idproducto()}">   
+                                        <a href="#" id="btnDelete" class="btn btn-danger" >Eliminar</a>                   
+                                    </td>
+                                </tr>
+                            </c:forEach>   
+                        </tbody>
+                    </table> 
                 </div>
-            </div>
-        </c:forEach>
+                <div class="col-sm-4">
+                    <div class="card"></div>
+                    <div class="card-header">
+                        <h3>Entrar a Subasta</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img src="img/prueba.png" class="rounded-circle" width="200" height="200"></div><br>
+                        <label>Nombre del permutador:</label>
+                        <input type="text" value="" readonly="" class="form-control">
+                        <label>Tu precio:</label>
+                        <input type="text" readonly="" class="form-control">   
+                    </div>
+                    <div class="card-footer"></div>
+                    <a href="#"class="btn btn-info btn-block">Enviar propuesta </a>
+                </div>
+            </div>   
+        </div>
 
     </body>
 </html>

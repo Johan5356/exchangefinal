@@ -93,7 +93,7 @@
                                 <h4 align="center">Desea ingresar a la subasta</h4>
                                 <div class="col-md-6">
                                     
-                                    <a href="subasta.jsp?idusuario=${usuario.getId()}" <input  type="submit" value="Si" class="btn btn-primary form-control" name="">Si</a> 
+                                    <a href="Controlador_subasta?accion=AgregarSubasta&id=${p.getId_publicar()}" <input  type="submit" value="Si" class="btn btn-primary form-control" name="">Si</a> 
                                 </div>
                                 <div class="col-md-6">
                                     <input type="submit"  value="No" class="btn btn-primary form-control" name="">
